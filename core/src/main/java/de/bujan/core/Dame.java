@@ -1,36 +1,39 @@
 package de.bujan.core;
 
 import playn.core.Game;
-import playn.core.Image;
-import playn.core.ImageLayer;
-
-import static playn.core.PlayN.assets;
-import static playn.core.PlayN.graphics;
+import playn.core.PlayN;
+import tripleplay.game.ScreenStack;
 
 public class Dame implements Game {
     @Override
-    public void init() {
-        // create and add background image layer
-        Image bgImage = assets().getImage("images/schachbrett.png");
-
-        ImageLayer bgLayer = graphics().createImageLayer(bgImage);
-        //bgLayer.setHeight(bgImage.height());
-        //bgLayer.setWidth(bgImage.width());
-        //graphics().setSize((int)bgImage.height(), (int)bgImage.width());
-        graphics().rootLayer().add(bgLayer);
+    public void init () {
+        director.push(new LoadingScreen(director));
     }
 
     @Override
-    public void paint(float alpha) {
-        // the background automatically paints itself, so no need to do anything here!
+    public void update (float delta) {
+        director.update(delta);
     }
 
     @Override
-    public void update(float delta) {
+    public void paint (float alpha) {
+        director.paint(alpha);
     }
 
     @Override
-    public int updateRate() {
-        return 25;
+    public int updateRate () {
+        return 0;
     }
+
+    protected final ScreenStack director = new ScreenStack() {
+        @Override protected void handleError (RuntimeException error) {
+            PlayN.log().warn("Screen failure", error);
+        }
+        @Override protected Transition defaultPushTransition () {
+            return ScreenStack.NOOP;
+        }
+        @Override protected Transition defaultPopTransition () {
+            return ScreenStack.NOOP;
+        }
+    };
 }
