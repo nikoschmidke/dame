@@ -21,10 +21,8 @@ public class FieldScreen extends UIScreen {
         SurfaceLayer backgroundSurfaceLayer =
                 graphics().createSurfaceLayer(width, height);
         graphics().rootLayer().add(backgroundSurfaceLayer);
-        float scaleX = width / ImageCache.background.width();
-        float scaleY = height / ImageCache.background.height();
-
-        backgroundSurfaceLayer.setScale(scaleX, scaleY);
+        float scale = getScale();
+        backgroundSurfaceLayer.setScale(scale, scale);
         backgroundSurfaceLayer.surface().drawImage(ImageCache.background, 0, 0);
 
 
@@ -50,6 +48,16 @@ public class FieldScreen extends UIScreen {
                         });
         graphics().rootLayer().add(stoneLayer);
 
+    }
+
+    private float getScale() {
+        float scale;
+        if (height >= width) {
+            scale = width / ImageCache.background.width();
+        } else {
+            scale = height / ImageCache.background.height();
+        }
+        return scale;
     }
 
     protected Graphics graphics() {
