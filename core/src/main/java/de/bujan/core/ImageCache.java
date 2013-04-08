@@ -15,6 +15,10 @@ public class ImageCache {
 	public static void loadImages(Assets assets, ProgressAssetWatcher assetWatcher) {
 		background = assets.getImage("images/schachbrett.png");
 		assetWatcher.add(background);
+        stoneWhite= assets.getImage("images/dameWheiss.png");
+        assetWatcher.add(stoneWhite);
+        stoneBlack = assets.getImage("images/dameGrau.png");
+        assetWatcher.add(stoneBlack);
 	}
 	
 }

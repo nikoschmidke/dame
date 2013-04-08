@@ -9,8 +9,6 @@ import playn.core.Image;
  * Time: 11:29
  */
 public class Stone {
-    private Image img;
-    private int x, y;
     private Image image;
     private float posX;
     private float posY;
@@ -37,4 +35,34 @@ public class Stone {
         return height;
     }
 
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public void setPosX(float posX) {
+        this.posX = posX;
+    }
+
+    public void setPosY(float posY) {
+        this.posY = posY;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    @Override
+    public String toString() {
+        return "Stone{" +
+                "image=" + image +
+                ", posX=" + posX +
+                ", posY=" + posY +
+                ", width=" + width +
+                ", height=" + height +
+                '}';
+    }
 }
