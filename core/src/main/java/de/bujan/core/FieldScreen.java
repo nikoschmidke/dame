@@ -25,19 +25,24 @@ public class FieldScreen extends UIScreen implements Listener {
     private Point touchPoint = null;
     private float dy;
     private float dx;
+    private Boolean firstTouch = null;
+    private Stone touchedStone;
+    private float rowSize;
+    private float imgSite;
+    private float diff;
 
     @Override
     public void wasAdded() {
-
-        width = graphics().width();//(int) (graphics().width() * graphics().scaleFactor());
-        height = graphics().height();
-        getScale();
-        prepareBackground();
         if (firstTime) {
-            initStones();
+            getScale();
+            prepareBackground();
             firstTime = false;
+            initStones();
+            drawStones();
         }
+    }
 
+    private void drawStones() {
         ImmediateLayer stoneLayer =
                 graphics().createImmediateLayer(
                         width,
@@ -59,13 +64,14 @@ public class FieldScreen extends UIScreen implements Listener {
                             }
                         }
                 );
+        stoneLayer.addListener(this);
         graphics().rootLayer().add(stoneLayer);
     }
 
     private void initStones() {
-        float rowSize = (fieldSiteSize / 10);
-        float imgSite = (rowSize * 0.8f);
-        float diff = (rowSize * 0.1f);
+
+        imgSite = (rowSize * 0.8f);
+        diff = (rowSize * 0.1f);
         //white stones
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 5; x++) {
@@ -119,16 +125,82 @@ public class FieldScreen extends UIScreen implements Listener {
     @Override
     public void update(float delta) {
         super.update(delta);
-        width = graphics().width();
-        height = graphics().height();
         getScale();
-        if (touchPoint != null) {
-
+        if (touchPoint != null && touchPointOnField()) {
+            System.out.println("touchPoint:" + touchPoint);
+            if (firstTouch != null && firstTouch) {
+                System.out.println("firstTouch");
+                getTouchedStone();
+                firstTouch = false;
+            } else {
+                System.out.println("firstTouch");
+                if (!isSecondTouchOnSomeStone() && allowedMove()) {
+                    moveTouchedStone();
+                    firstTouch = null;
+                    touchPoint = null;
+                }
+            }
+            //showAvailableMoves(stone);
         }
+        drawStones();
+    }
 
+    private void getTouchedStone() {
+        for (Stone stone : onScreenStones) {
+            if (touchPointOnStone(stone)) {
+                touchedStone = stone;
+                touchPoint = null;
+                break;
+            }
+        }
+        System.out.println("touchedStone:" + touchedStone);
+    }
+
+    private boolean isSecondTouchOnSomeStone() {
+        boolean touchPointOnStone = false;
+        for (Stone stone : onScreenStones) {
+            if (touchPointOnStone(stone)) {
+                touchPointOnStone = true;
+                break;
+            }
+        }
+        return touchPointOnStone;
+    }
+
+    private void moveTouchedStone() {
+        System.out.println("dx" + dx);
+        float posXOnField = touchPoint.x() - dx;
+        System.out.println("posXOnField:" + posXOnField);
+        int rowX = (int) (posXOnField / rowSize);
+        System.out.println("rowX:" + rowX);
+        float newPosXOnField = rowX * rowSize;
+        touchedStone.setPosX(newPosXOnField + dx + diff);
+        float posYOnField = touchPoint.y() - dy;
+        int rowY = (int) (posYOnField / rowSize);
+        touchedStone.setPosY(rowY * rowSize + dy + diff);
+        System.out.println("New pos touchedStone:" + touchedStone);
+    }
+
+    private boolean allowedMove() {
+        return true;
+    }
+
+    private boolean touchPointOnStone(Stone stone) {
+        if (stone.getPosX() <= touchPoint.x() && touchPoint.x() <= stone.getPosX() + rowSize) {
+            if (stone.getPosY() <= touchPoint.y() && touchPoint.y() <= stone.getPosY() + rowSize) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean touchPointOnField() {
+        return true;
     }
 
     private void getScale() {
+        width = graphics().width();
+        height = graphics().height();
         if (height >= width) {
             scale = width / ImageCache.background.width();
             fieldSiteSize = width;
@@ -140,11 +212,14 @@ public class FieldScreen extends UIScreen implements Listener {
             dx = (width - fieldSiteSize) / 2;
             dy = 0;
         }
+        rowSize = (fieldSiteSize / 10);
     }
 
     @Override
     public void onPointerStart(Pointer.Event event) {
         touchPoint = new Point((int) event.x(), (int) event.y());
+        System.out.println("touchPoint " + touchPoint);
+        if (firstTouch == null) firstTouch = true;
     }
 
     @Override
