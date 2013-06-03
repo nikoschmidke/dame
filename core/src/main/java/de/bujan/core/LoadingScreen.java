@@ -1,7 +1,12 @@
 package de.bujan.core;
 
 
-import playn.core.*;
+import playn.core.Canvas;
+import playn.core.CanvasImage;
+import playn.core.Graphics;
+import playn.core.ImmediateLayer;
+import playn.core.PlayN;
+import playn.core.Surface;
 import tripleplay.game.ScreenStack;
 import tripleplay.game.UIScreen;
 
@@ -60,7 +65,7 @@ public class LoadingScreen extends UIScreen implements ImmediateLayer.Renderer {
     }
 	
 	public void start() {
-		director.replace(new FieldScreen());
+		director.replace(new BoardScreen());
 	}
 	
 	@Override
