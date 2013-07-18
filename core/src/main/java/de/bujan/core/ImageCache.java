@@ -4,7 +4,7 @@ import playn.core.Assets;
 import playn.core.Image;
 
 /**
- * @author bob
+ * @author niko.schmidke
  *
  */
 public class ImageCache {

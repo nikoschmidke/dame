@@ -2,12 +2,12 @@ package de.bujan.core;
 
 import playn.core.Graphics;
 import playn.core.Image;
+import playn.core.ImageLayer;
 import playn.core.ImmediateLayer;
 import playn.core.PlayN;
 import playn.core.Pointer;
 import playn.core.Pointer.Listener;
 import playn.core.Surface;
-import playn.core.SurfaceLayer;
 import pythagoras.i.Point;
 import tripleplay.game.UIScreen;
 
@@ -130,15 +130,11 @@ public class BoardScreen extends UIScreen implements Listener {
     }
 
     private void prepareBackground() {
-        SurfaceLayer backgroundSurfaceLayer = graphics().createSurfaceLayer(screenWidth, screenHeight);
-        graphics().rootLayer().add(backgroundSurfaceLayer);
-        backgroundSurfaceLayer.surface().drawImage(
-                ImageCache.background,
-                dx,
-                dy,
-                boardSize,
-                boardSize
-        );
+        ImageLayer imageLayer = graphics().createImageLayer(ImageCache.background);
+        graphics().rootLayer().add(imageLayer);
+        imageLayer.setTx(dx);
+        imageLayer.setTy(dy);
+        imageLayer.setSize(boardSize, boardSize);
     }
 
     protected Graphics graphics() {
@@ -147,7 +143,7 @@ public class BoardScreen extends UIScreen implements Listener {
 
     @Override
     public void update(int delta) {
-        super.update((int) delta);
+        super.update(delta);
         getScale();
         if (touchPoint != null && touchPointOnField()) {
             out.println("touchPoint:" + touchPoint);
@@ -217,18 +213,18 @@ public class BoardScreen extends UIScreen implements Listener {
                 if (isSecondTouchOnRightRow())
                     break;
             case DAME:
-                ;
+
                 break;
         }
         return true;
     }
 
     private boolean isSecondTouchOnRightRow() {
-        return false;  //To change body of created methods use File | Settings | File Templates.
+        return false;
     }
 
     private boolean isSecondTouchOnWhite() {
-        return false;  //To change body of created methods use File | Settings | File Templates.
+        return false;
     }
 
     private boolean touchPointOnStone(Stone stone) {
@@ -270,16 +266,16 @@ public class BoardScreen extends UIScreen implements Listener {
 
     @Override
     public void onPointerEnd(Pointer.Event event) {
-        //To change body of implemented methods use File | Settings | File Templates.
+
     }
 
     @Override
     public void onPointerDrag(Pointer.Event event) {
-        //To change body of implemented methods use File | Settings | File Templates.
+
     }
 
     @Override
     public void onPointerCancel(Pointer.Event event) {
-        //To change body of implemented methods use File | Settings | File Templates.
+
     }
 }

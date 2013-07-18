@@ -11,7 +11,7 @@ import tripleplay.game.ScreenStack;
 import tripleplay.game.UIScreen;
 
 /**
- * @author bob
+ * @author niko.schmidke
  *
  */
 public class LoadingScreen extends UIScreen implements ImmediateLayer.Renderer {

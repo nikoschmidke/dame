@@ -9,7 +9,7 @@ import java.util.List;
 
 
 /**
- * @author bob
+ * @author niko.schmidke
  *
  */
 public class ProgressAssetWatcher implements Callback {
