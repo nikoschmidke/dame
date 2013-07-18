@@ -146,8 +146,8 @@ public class BoardScreen extends UIScreen implements Listener {
     }
 
     @Override
-    public void update(float delta) {
-        super.update(delta);
+    public void update(int delta) {
+        super.update((int) delta);
         getScale();
         if (touchPoint != null && touchPointOnField()) {
             out.println("touchPoint:" + touchPoint);

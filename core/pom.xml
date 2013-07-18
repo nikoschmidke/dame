@@ -22,7 +22,7 @@
         <dependency>
             <groupId>com.threerings</groupId>
             <artifactId>tripleplay</artifactId>
-            <version>1.5</version>
+            <version>1.7.2</version>
         </dependency>
     </dependencies>
 

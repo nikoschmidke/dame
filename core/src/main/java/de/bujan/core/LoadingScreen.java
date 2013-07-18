@@ -67,12 +67,7 @@ public class LoadingScreen extends UIScreen implements ImmediateLayer.Renderer {
 	public void start() {
 		director.replace(new BoardScreen());
 	}
-	
-	@Override
-	public void update(float delta) {
-		super.update(delta);
-	}
-	
+
 	/* (non-Javadoc)
      * @see playn.core.ImmediateLayer.Renderer#render(playn.core.Surface)
      */
