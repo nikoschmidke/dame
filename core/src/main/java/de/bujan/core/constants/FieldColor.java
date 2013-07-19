@@ -1,4 +1,4 @@
-package de.bujan.core;
+package de.bujan.core.constants;
 
 /**
  * Created with IntelliJ IDEA.

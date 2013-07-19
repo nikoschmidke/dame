@@ -1,5 +1,9 @@
 package de.bujan.core;
 
+import de.bujan.core.constants.FieldColor;
+import de.bujan.core.constants.StoneColor;
+import de.bujan.core.constants.StoneType;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Niko
@@ -58,10 +62,6 @@ public class Field {
         return stone;
     }
 
-    public void setStone(Stone stone) {
-        this.stone = stone;
-    }
-
     public boolean hasStone() {
         return null != stone;
     }
@@ -76,5 +76,46 @@ public class Field {
                 ", color=" + color +
                 ", stone=" + stone +
                 "}\n";
+    }
+
+
+    public void setWhiteStone(StoneType stoneType) {
+        this.stone = new Stone(ImageCache.stoneWhite, StoneColor.WHITE, stoneType);
+    }
+
+    public void setBlackStone(StoneType stoneType) {
+        this.stone = new Stone(ImageCache.stoneBlack, StoneColor.BLACK, stoneType);
+    }
+
+    public void setStone(Stone stone) {
+        this.stone = stone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Field field = (Field) o;
+
+        if (Float.compare(field.posX1, posX1) != 0) return false;
+        if (Float.compare(field.posX2, posX2) != 0) return false;
+        if (Float.compare(field.posY1, posY1) != 0) return false;
+        if (Float.compare(field.posY2, posY2) != 0) return false;
+        if (color != field.color) return false;
+        if (stone != null ? !stone.equals(field.stone) : field.stone != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (posX1 != +0.0f ? Float.floatToIntBits(posX1) : 0);
+        result = 31 * result + (posX2 != +0.0f ? Float.floatToIntBits(posX2) : 0);
+        result = 31 * result + (posY1 != +0.0f ? Float.floatToIntBits(posY1) : 0);
+        result = 31 * result + (posY2 != +0.0f ? Float.floatToIntBits(posY2) : 0);
+        result = 31 * result + color.hashCode();
+        result = 31 * result + (stone != null ? stone.hashCode() : 0);
+        return result;
     }
 }

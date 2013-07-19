@@ -44,7 +44,6 @@ public class Dame extends Game.Default {
 
     @Override
     public void paint (float alpha) {
-        director.paint(new Clock.Source(0));
+        director.paint(new Clock.Source(10));
     }
-
 }

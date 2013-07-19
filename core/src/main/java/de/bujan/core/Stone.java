@@ -1,5 +1,7 @@
 package de.bujan.core;
 
+import de.bujan.core.constants.StoneColor;
+import de.bujan.core.constants.StoneType;
 import playn.core.Image;
 
 /**
@@ -10,13 +12,14 @@ import playn.core.Image;
  */
 public class Stone {
     private Image image;
-    private float posX;
-    private float posY;
-    private float width;
-    private float height;
     private StoneType type = StoneType.NORMAL;
     private StoneColor color;
 
+    public Stone(Image image, StoneColor color, StoneType type) {
+        this.image = image;
+        this.color = color;
+        this.type = type;
+    }
 
     public StoneType getType() {
         return type;
@@ -30,63 +33,17 @@ public class Stone {
         return image;
     }
 
-    public float getPosX() {
-        return posX;
-    }
-
-    public float getPosY() {
-        return posY;
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-
     public void setImage(Image image) {
         this.image = image;
-    }
-
-    public void setPosX(float posX) {
-        this.posX = posX;
-    }
-
-    public void setPosY(float posY) {
-        this.posY = posY;
-    }
-
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
     }
 
     @Override
     public String toString() {
         return "Stone{" +
                 "image=" + image +
-                ", posX=" + posX +
-                ", posY=" + posY +
-                ", width=" + width +
-                ", height=" + height +
                 ", type=" + type +
                 ", color=" + color +
                 '}';
     }
-
-    public StoneColor getColor() {
-        return color;
-    }
-
-    public void setColor(StoneColor color) {
-        this.color = color;
-    }
-
-
 }
 
