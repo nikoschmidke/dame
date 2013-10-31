@@ -24,6 +24,11 @@
             <artifactId>tripleplay</artifactId>
             <version>1.7.2</version>
         </dependency>
+        <dependency>
+            <groupId>de.bujan</groupId>
+            <artifactId>assets</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -19,13 +19,13 @@ public class BoardScreen extends UIScreen implements Listener {
     public static int screenWidth;
     public static int screenHeight;
 
-    private float boardSize;
+    private int boardSize;
     private boolean firstTime = true;
     private Point touchPoint = null;
     private int dy;
     private int dx;
     private boolean firstTouch = true;
-    private float fieldSize;
+    private int fieldSize;
     private int rowCount = 10;
     private Field[][] fields = new Field[rowCount][rowCount];
     private Field touchedField;
