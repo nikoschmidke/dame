@@ -10,6 +10,5 @@
     </parent>
 
     <artifactId>assets</artifactId>
-    <packaging>jar</packaging>
     <name>Dame Assets</name>
 </project>

@@ -24,11 +24,6 @@
             <artifactId>tripleplay</artifactId>
             <version>1.7.2</version>
         </dependency>
-        <dependency>
-            <groupId>de.bujan</groupId>
-            <artifactId>assets</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -36,18 +31,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
-
-        <resources>
-            <!-- include the source files in our main jar for use by GWT -->
-            <resource>
-                <directory>${project.build.sourceDirectory}</directory>
-            </resource>
-            <!-- and continue to include our standard resources -->
-            <resource>
-                <directory>${basedir}/src/main/resources</directory>
-            </resource>
-        </resources>
     </build>
 </project>

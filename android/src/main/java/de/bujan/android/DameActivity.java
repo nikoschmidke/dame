@@ -8,7 +8,6 @@ public class DameActivity extends GameActivity {
 
   @Override
   public void main(){
-    platform().assets().setPathPrefix("de/bujan/resources");
     PlayN.run(new Dame(100));
   }
 }

@@ -59,7 +59,7 @@ public class LoadingScreen extends UIScreen implements ImmediateLayer.Renderer {
         };
 
         ProgressAssetWatcher assetWatcher = new ProgressAssetWatcher(assetListener);
-        ImageCache.loadImages(PlayN.assets(), assetWatcher);
+        ImageCache.loadImages(assetWatcher);
         assetWatcher.start();
     }
 
