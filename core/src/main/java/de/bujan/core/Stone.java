@@ -33,10 +33,6 @@ public class Stone {
         return image;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
     @Override
     public String toString() {
         return "Stone{" +
@@ -44,6 +40,10 @@ public class Stone {
                 ", type=" + type +
                 ", color=" + color +
                 '}';
+    }
+
+    public StoneColor getColor() {
+        return color;
     }
 }
 

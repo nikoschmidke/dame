@@ -1,6 +1,7 @@
 package de.bujan.core;
 
 import de.bujan.core.constants.FieldColor;
+import de.bujan.core.constants.StoneColor;
 import de.bujan.core.constants.StoneType;
 import playn.core.Graphics;
 import playn.core.ImageLayer;
@@ -29,6 +30,7 @@ public class BoardScreen extends UIScreen implements Listener {
     private int rowCount = 10;
     private Field[][] fields = new Field[rowCount][rowCount];
     private Field touchedField;
+    private boolean whiteTurn = true;
 
     @Override
     public void wasAdded() {
@@ -47,10 +49,10 @@ public class BoardScreen extends UIScreen implements Listener {
         if (screenHeight >= screenWidth) {
             boardSize = screenWidth;
             dx = 0;
-            dy = (int) ((screenHeight - boardSize) / 2);
+            dy = (screenHeight - boardSize) / 2;
         } else {
             boardSize = screenHeight;
-            dx = (int) ((screenWidth - boardSize) / 2);
+            dx = (screenWidth - boardSize) / 2;
             dy = 0;
         }
         fieldSize = (boardSize / rowCount);
@@ -135,33 +137,42 @@ public class BoardScreen extends UIScreen implements Listener {
         //calculateSizes();
         if (touchPoint != null && touchPointOnBoard()) {
             out.println("touchPoint:" + touchPoint);
-                Field touchedFieldTemp = getTouchedField();
-                if (touchedFieldTemp.hasStone()) {
-                    if (firstTouch && !touchedFieldTemp.equals(touchedField)) {
-                        out.println("firstTouch");
-                        touchedField = touchedFieldTemp;
-                        firstTouch = false;
-
-                    }
-                } else {
-                    //secondTouch
-                    if (!firstTouch) {
-                        out.println("secondTouch");
-                        moveStone(touchedFieldTemp);
-                        firstTouch = true;
-                        drawStones();
-                    }
+            Field touchedFieldTemp = getTouchedField();
+            if (touchedFieldTemp.hasStone()) {
+                if (firstTouch &&
+                        !touchedFieldTemp.equals(touchedField) &&
+                        touchedFieldStoneColorIsSameAsPlayerColor(touchedFieldTemp)
+                        ) {
+                    out.println("firstTouch");
+                    touchedField = touchedFieldTemp;
+                    firstTouch = false;
                 }
+            } else {
+                //secondTouch
+                if (!firstTouch && touchedFieldTemp.isBlack()) {
+                    out.println("secondTouch");
+                    moveStone(touchedFieldTemp);
+                    firstTouch = true;
+                    whiteTurn = !whiteTurn;
+                    drawStones();
+                }
+            }
+            out.println("whiteTurn=" + whiteTurn);
             //showAvailableMoves(stone);
         }
         touchPoint = null;
     }
 
+    private boolean touchedFieldStoneColorIsSameAsPlayerColor(Field touchedField) {
+        return (whiteTurn && touchedField.getStone().getColor().equals(StoneColor.WHITE)) ||
+                (!whiteTurn && touchedField.getStone().getColor().equals(StoneColor.BLACK));
+    }
+
     private Field getTouchedField() {
         int posX = touchPoint.x() - dx;
         int posY = touchPoint.y() - dy;
-        int rowX = (int) (posX / fieldSize);
-        int rowY = (int) (posY / fieldSize);
+        int rowX = posX / fieldSize;
+        int rowY = posY / fieldSize;
         return fields[rowX][rowY];
     }
 

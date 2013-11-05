@@ -91,6 +91,10 @@ public class Field {
         this.stone = stone;
     }
 
+    public boolean isBlack(){
+        return color.equals(FieldColor.BLACK);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
